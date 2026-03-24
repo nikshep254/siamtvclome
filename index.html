@@ -13,19 +13,20 @@
             --bg:  #000;
             --bg2: #0a0a0a;
             --bg3: #111;
-            --border:  rgba(255,255,255,0.07);
-            --border2: rgba(255,255,255,0.12);
+            --border:  rgba(255,255,255,0.12);
+            --border2: rgba(255,255,255,0.2);
             --accent: #fff;
-            --blue:  #0ea5e9;
-            --green: #10b981;
-            --red:   #f43f5e;
-            --amber: #f59e0b;
-            --gold:  #c9a84c;
-            --gold2: #e6c97a;
-            --text:  #fff;
-            --text2: rgba(255,255,255,0.6);
-            --text3: rgba(255,255,255,0.28);
-            --glow:  0 0 30px rgba(14,165,233,0.18);
+            --blue:  #38bdf8;
+            --green: #34d399;
+            --red:   #fb7185;
+            --amber: #fbbf24;
+            --gold:  #eab308;
+            
+            /* ── Brightened Text Palette ── */
+            --text:  #ffffff;             /* Pure White */
+            --text2: rgba(255,255,255,0.88); /* Secondary text */
+            --text3: rgba(255,255,255,0.55); /* Labels and metadata */
+            --glow:  0 0 30px rgba(56,189,248,0.2);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,7 +43,7 @@
         body::before {
             content: '';
             position: fixed; inset: 0;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
             background-size: 28px 28px;
             mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 40%, transparent 100%);
             -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 40%, transparent 100%);
@@ -51,15 +52,13 @@
 
         #app { position: relative; z-index: 1; height: 100vh; display: flex; flex-direction: column; }
 
-        /* ══════════════════════════
-           TOPBAR
-        ══════════════════════════ */
+        /* ── TOPBAR ── */
         .topbar {
             height: 54px;
             border-bottom: 1px solid var(--border);
             display: flex; align-items: center;
             padding: 0 20px; gap: 14px;
-            background: rgba(0,0,0,0.88);
+            background: rgba(0,0,0,0.9);
             backdrop-filter: blur(20px);
             flex-shrink: 0; z-index: 10;
         }
@@ -69,29 +68,30 @@
         }
         .logo-icon {
             width: 28px; height: 28px;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: linear-gradient(135deg, var(--blue), #0284c7);
             border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
             font-size: 14px;
-            box-shadow: 0 0 14px rgba(14,165,233,0.4);
+            box-shadow: 0 0 14px rgba(56,189,248,0.4);
         }
-        .topbar-logo span { color: rgba(255,255,255,0.4); }
+        .topbar-logo span { color: var(--text3); }
         .topbar-spacer { flex: 1; }
+        
         .status-badge {
             display: flex; align-items: center; gap: 6px;
-            background: rgba(16,185,129,0.1);
-            border: 1px solid rgba(16,185,129,0.22);
+            background: rgba(52,211,153,0.1);
+            border: 1px solid rgba(52,211,153,0.25);
             padding: 4px 11px; border-radius: 100px;
-            font-size: 11px; color: var(--green); letter-spacing: .3px;
+            font-size: 11px; color: var(--green); font-weight: 600;
         }
         .status-badge.loading {
-            background: rgba(245,158,11,0.1);
-            border-color: rgba(245,158,11,0.22);
+            background: rgba(251,191,36,0.1);
+            border-color: rgba(251,191,36,0.25);
             color: var(--amber);
         }
         .status-badge.error {
-            background: rgba(244,63,94,0.1);
-            border-color: rgba(244,63,94,0.22);
+            background: rgba(251,113,133,0.1);
+            border-color: rgba(251,113,133,0.25);
             color: var(--red);
         }
         .status-dot {
@@ -102,29 +102,21 @@
         @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
 
         .counter-chip {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
             padding: 4px 10px; border-radius: 8px;
             font-size: 11px; color: var(--text2);
         }
-        .counter-chip b { color: #fff; }
+        .counter-chip b { color: #fff; font-weight: 700; }
 
-        /* ══════════════════════════
-           LAYOUT
-        ══════════════════════════ */
-        .layout {
-            display: flex; flex: 1; overflow: hidden;
-        }
+        .layout { display: flex; flex: 1; overflow: hidden; }
 
-        /* ══════════════════════════
-           PLAYER SIDE
-        ══════════════════════════ */
+        /* ── PLAYER SIDE ── */
         .player-side {
             flex: 1; display: flex; flex-direction: column;
             padding: 20px; gap: 14px; overflow: hidden;
         }
 
-        /* Video wrapper */
         .video-wrap {
             position: relative;
             background: #000;
@@ -133,23 +125,21 @@
             overflow: hidden;
             aspect-ratio: 16/9;
             flex-shrink: 0;
+            box-shadow: var(--glow);
         }
-        #videoPlayer {
-            width: 100%; height: 100%;
-            display: block; background: #000;
-        }
-        /* Loading overlay */
+        #videoPlayer { width: 100%; height: 100%; display: block; background: #000; }
+
         .video-overlay {
             position: absolute; inset: 0;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             pointer-events: none;
             opacity: 0; transition: opacity .3s;
         }
         .video-overlay.show { opacity: 1; }
         .spinner-ring {
-            width: 36px; height: 36px;
-            border: 2px solid rgba(255,255,255,0.12);
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
             border-top-color: var(--blue);
             border-radius: 50%;
             animation: spin .7s linear infinite;
@@ -161,187 +151,132 @@
             display: flex; align-items: center; gap: 14px;
             background: var(--bg2);
             border: 1px solid var(--border);
-            border-radius: 10px; padding: 12px 16px;
+            border-radius: 10px; padding: 14px 18px;
             flex-shrink: 0;
         }
         .np-icon {
-            width: 34px; height: 34px; border-radius: 8px;
-            background: rgba(14,165,233,0.12);
-            border: 1px solid rgba(14,165,233,0.2);
+            width: 38px; height: 38px; border-radius: 8px;
+            background: rgba(56,189,248,0.12);
+            border: 1px solid rgba(56,189,248,0.25);
             display: flex; align-items: center; justify-content: center;
-            font-size: 16px; flex-shrink: 0;
+            font-size: 18px; flex-shrink: 0;
         }
         .np-label {
-            font-size: 10px; letter-spacing: 1.8px;
+            font-size: 10px; font-weight: 700; letter-spacing: 2px;
             text-transform: uppercase; color: var(--text3);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
         .np-name {
-            font-size: 14px; font-weight: 600; color: #fff;
+            font-size: 15px; font-weight: 600; color: #fff;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .np-name.idle { color: var(--text3); font-weight: 400; }
+        
         .np-badge {
             margin-left: auto;
             display: flex; align-items: center; gap: 6px;
-            font-size: 11px; color: var(--red);
-            background: rgba(244,63,94,0.1);
-            border: 1px solid rgba(244,63,94,0.2);
-            padding: 4px 10px; border-radius: 100px;
-            letter-spacing: .5px;
+            font-size: 11px; font-weight: 700; color: var(--text3);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            padding: 5px 12px; border-radius: 100px;
         }
         .np-badge.playing {
             color: var(--green);
-            background: rgba(16,185,129,0.1);
-            border-color: rgba(16,185,129,0.2);
-        }
-        .live-dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: currentColor;
-            animation: pulse-dot 1.4s ease infinite;
+            background: rgba(52,211,153,0.1);
+            border-color: rgba(52,211,153,0.2);
         }
 
-        /* Credit line */
         .credit-line {
             font-size: 11px; color: var(--text3); letter-spacing: .3px;
-            padding: 0 2px;
+            padding: 0 4px;
         }
-        .credit-line b { color: var(--gold); }
+        .credit-line b { color: var(--gold); font-weight: 600; }
 
-        /* ══════════════════════════
-           CHANNEL LIST SIDE
-        ══════════════════════════ */
+        /* ── CHANNEL LIST SIDE ── */
         .channel-side {
-            width: 320px; flex-shrink: 0;
+            width: 340px; flex-shrink: 0;
             border-left: 1px solid var(--border);
             background: #050505;
             display: flex; flex-direction: column;
         }
 
         .ch-header {
-            padding: 14px 16px;
+            padding: 16px;
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
         }
         .ch-title {
-            font-size: 11px; letter-spacing: 2px;
+            font-size: 11px; font-weight: 700; letter-spacing: 2px;
             text-transform: uppercase; color: var(--text3);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        /* Search */
         .search-wrap { position: relative; }
         .search-icon {
             position: absolute; left: 12px; top: 50%;
             transform: translateY(-50%);
             font-size: 13px; color: var(--text3);
-            pointer-events: none;
         }
         #search-input {
             width: 100%;
             background: var(--bg3);
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
             color: #fff;
             font-family: 'Geist Mono', monospace;
             font-size: 13px;
-            padding: 9px 12px 9px 34px;
+            padding: 10px 12px 10px 36px;
             border-radius: 9px; outline: none;
-            transition: border-color .2s, box-shadow .2s;
         }
-        #search-input:focus {
-            border-color: rgba(255,255,255,0.22);
-            box-shadow: 0 0 0 2px rgba(255,255,255,0.04);
-        }
-        #search-input::placeholder { color: var(--text3); }
+        #search-input:focus { border-color: var(--text3); }
+        #search-input::placeholder { color: rgba(255,255,255,0.4); }
 
-        /* Channel list scroll area */
-        #channel-list-container {
-            flex: 1; overflow-y: auto;
-            padding: 8px;
-        }
-        #channel-list-container::-webkit-scrollbar { width: 4px; }
-        #channel-list-container::-webkit-scrollbar-track { background: transparent; }
-        #channel-list-container::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1); border-radius: 2px;
-        }
+        #channel-list-container { flex: 1; overflow-y: auto; padding: 10px; }
 
-        /* Channel item */
         .ch-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 10px;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px;
             border-radius: 9px;
-            cursor: pointer;
-            text-decoration: none;
+            cursor: pointer; text-decoration: none;
             color: var(--text2);
             border: 1px solid transparent;
-            transition: background .12s, border-color .12s, color .12s;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
         .ch-item:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
+            border-color: var(--border);
             color: #fff;
         }
         .ch-item.active {
-            background: rgba(14,165,233,0.1);
-            border-color: rgba(14,165,233,0.25);
+            background: rgba(56,189,248,0.1);
+            border-color: rgba(56,189,248,0.3);
             color: #fff;
         }
         .ch-logo {
-            width: 30px; height: 30px;
+            width: 32px; height: 32px;
             border-radius: 7px;
             object-fit: contain;
-            background: rgba(255,255,255,0.08);
-            padding: 3px;
-            flex-shrink: 0;
+            background: #fff;
+            padding: 2px; flex-shrink: 0;
         }
-        .ch-name {
-            font-size: 12px; flex: 1;
-            white-space: nowrap; overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .ch-play-icon {
-            font-size: 10px; color: var(--blue);
-            opacity: 0; transition: opacity .15s;
-        }
-        .ch-item.active .ch-play-icon { opacity: 1; }
+        .ch-name { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Loader */
         #loader {
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            gap: 14px; padding: 48px 20px;
+            gap: 14px; padding: 60px 20px;
             color: var(--text3);
         }
-        .loader-ring {
-            width: 28px; height: 28px;
-            border: 2px solid rgba(255,255,255,0.08);
-            border-top-color: var(--blue);
-            border-radius: 50%;
-            animation: spin .7s linear infinite;
-        }
-        .loader-text { font-size: 12px; letter-spacing: .5px; }
 
-        /* Animations */
-        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-        /* ── Responsive ── */
         @media (max-width: 768px) {
             html, body { overflow: auto; }
             .layout { flex-direction: column; }
-            .channel-side {
-                width: 100%; border-left: none;
-                border-top: 1px solid var(--border);
-                height: 50vh;
-            }
-            .player-side { overflow: visible; }
+            .channel-side { width: 100%; border-left: none; height: 50vh; }
         }
     </style>
 </head>
 <body>
 <div id="app">
 
-    <!-- ── TOPBAR ── -->
     <div class="topbar">
         <div class="topbar-logo">
             <div class="logo-icon">📺</div>
@@ -357,10 +292,7 @@
         </div>
     </div>
 
-    <!-- ── LAYOUT ── -->
     <div class="layout">
-
-        <!-- Player side -->
         <div class="player-side">
             <div class="video-wrap">
                 <video id="videoPlayer" controls autoplay poster="https://i.imgur.com/gC5sJd7.png"></video>
@@ -369,7 +301,6 @@
                 </div>
             </div>
 
-            <!-- Now playing bar -->
             <div class="now-playing">
                 <div class="np-icon" id="np-icon">📡</div>
                 <div style="flex:1;min-width:0">
@@ -377,61 +308,57 @@
                     <div class="np-name idle" id="np-name">Select a channel to begin</div>
                 </div>
                 <div class="np-badge" id="np-badge">
-                    <div class="live-dot"></div>
+                    <div class="status-dot"></div>
                     IDLE
                 </div>
             </div>
 
             <div class="credit-line">
-                Click twice if a channel doesn't play &nbsp;·&nbsp; Made by <b>NikshepOS</b>
+                Buffering? Click twice &nbsp;·&nbsp; Engine by <b>NikshepOS</b>
             </div>
         </div>
 
-        <!-- Channel side -->
         <div class="channel-side">
             <div class="ch-header">
                 <div class="ch-title">Channels</div>
                 <div class="search-wrap">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="search-input" placeholder="Search channels…" autocomplete="off" spellcheck="false">
+                    <input type="text" id="search-input" placeholder="Search channels…" autocomplete="off">
                 </div>
             </div>
             <div id="channel-list-container">
                 <div id="channel-list">
                     <div id="loader">
-                        <div class="loader-ring"></div>
-                        <div class="loader-text">Loading channels…</div>
+                        <div class="spinner-ring"></div>
+                        <div style="font-size:12px">Syncing Streams…</div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <script>
-    const video       = document.getElementById('videoPlayer');
+    const video = document.getElementById('videoPlayer');
     const channelListEl = document.getElementById('channel-list');
     const searchInput = document.getElementById('search-input');
-    const loader      = document.getElementById('loader');
+    const loader = document.getElementById('loader');
     const listContainer = document.getElementById('channel-list-container');
-    const videoOverlay  = document.getElementById('video-overlay');
-    const npName      = document.getElementById('np-name');
-    const npBadge     = document.getElementById('np-badge');
-    const topStatus   = document.getElementById('top-status');
-    const topStatusTxt= document.getElementById('top-status-text');
+    const videoOverlay = document.getElementById('video-overlay');
+    const npName = document.getElementById('np-name');
+    const npBadge = document.getElementById('np-badge');
+    const topStatus = document.getElementById('top-status');
+    const topStatusTxt = document.getElementById('top-status-text');
     const chCountChip = document.getElementById('channel-count');
-    const chCountNum  = document.getElementById('ch-count-num');
+    const chCountNum = document.getElementById('ch-count-num');
 
     const M3U_URL = 'https://raw.githubusercontent.com/siam3310/cdn-tv/refs/heads/main/siamcdnplaylist.m3u';
     let hls;
     let allChannels = [];
-    let currentlyDisplayedChannels = [];
+    let activeChannelName = null;
     const CHANNELS_PER_PAGE = 50;
     let currentPage = 1;
-    let activeChannelName = null;
 
-    // ── Helpers ─────────────────────────────────────────
     function setTopStatus(state, text) {
         topStatus.className = 'status-badge ' + state;
         topStatusTxt.textContent = text;
@@ -442,17 +369,16 @@
         npName.classList.toggle('idle', state === 'idle');
         if (state === 'playing') {
             npBadge.className = 'np-badge playing';
-            npBadge.innerHTML = '<div class="live-dot"></div> LIVE';
+            npBadge.innerHTML = '<div class="status-dot"></div> LIVE';
         } else if (state === 'loading') {
             npBadge.className = 'np-badge';
-            npBadge.innerHTML = '<div class="live-dot"></div> LOADING';
+            npBadge.innerHTML = '<div class="status-dot"></div> LOADING';
         } else {
             npBadge.className = 'np-badge';
-            npBadge.innerHTML = '<div class="live-dot"></div> IDLE';
+            npBadge.innerHTML = '<div class="status-dot"></div> IDLE';
         }
     }
 
-    // ── 1. Play a channel ─────────────────────────────
     function playChannel(channelName) {
         const streamUrl = `/api/proxy?channel=${encodeURIComponent(channelName)}`;
         activeChannelName = channelName;
@@ -462,56 +388,33 @@
 
         if (Hls.isSupported()) {
             if (hls) hls.destroy();
-            hls = new Hls({
-                fragLoadingMaxRetry: 4,
-                fragLoadingMaxRetryTimeout: 20000,
-            });
+            hls = new Hls();
             hls.loadSource(streamUrl);
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                video.play().catch(e => console.error('Autoplay blocked:', e));
+                video.play();
                 setNowPlaying(channelName, 'playing');
                 setTopStatus('', 'Live');
                 videoOverlay.classList.remove('show');
             });
-            hls.on(Hls.Events.ERROR, (event, data) => {
-                if (data.fatal) {
-                    setNowPlaying(channelName + ' — error', 'idle');
-                    setTopStatus('error', 'Error');
-                    videoOverlay.classList.remove('show');
-                }
-            });
-            setTimeout(() => video.play().catch(() => {}), 500);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = streamUrl;
-            video.play().catch(e => console.error('Play blocked:', e));
-            setNowPlaying(channelName, 'playing');
-            setTopStatus('', 'Live');
-            videoOverlay.classList.remove('show');
         }
-
         updateActiveChannel();
     }
 
-    // ── 2. Fetch & parse M3U ──────────────────────────
     async function fetchAndParseM3U() {
         try {
             const response = await fetch(M3U_URL);
-            if (!response.ok) throw new Error('Network error');
             const m3uText = await response.text();
-            const lines = m3uText.split(/\r\n|\n|\r/);
+            const lines = m3uText.split(/\n/);
             let channels = [];
             for (let i = 0; i < lines.length; i++) {
                 if (lines[i].startsWith('#EXTINF:')) {
-                    const infoLine = lines[i];
-                    const nameMatch = infoLine.split(',').pop();
-                    const logoMatch = infoLine.match(/tvg-logo="([^"]+)"/);
-                    if (nameMatch) {
-                        channels.push({
-                            name: nameMatch.trim(),
-                            logo: logoMatch ? logoMatch[1] : 'https://i.imgur.com/Nl4aZCF.png'
-                        });
-                    }
+                    const name = lines[i].split(',').pop().trim();
+                    const logoMatch = lines[i].match(/tvg-logo="([^"]+)"/);
+                    channels.push({
+                        name: name,
+                        logo: logoMatch ? logoMatch[1] : 'https://i.imgur.com/Nl4aZCF.png'
+                    });
                 }
             }
             allChannels = channels;
@@ -520,33 +423,21 @@
             chCountChip.style.display = '';
             setTopStatus('', 'Ready');
             renderInitialChannels();
-        } catch (error) {
-            console.error('Failed to load M3U:', error);
-            loader.innerHTML = `
-                <div style="font-size:22px;opacity:.4">⚠️</div>
-                <div style="font-size:12px;color:var(--red)">Failed to load channels</div>
-            `;
-            setTopStatus('error', 'Error');
+        } catch (e) {
+            setTopStatus('error', 'Fetch Failed');
         }
     }
 
-    // ── 3. Render channels ────────────────────────────
-    function renderChannels(channelsToRender) {
-        channelsToRender.forEach(channel => {
-            const item = document.createElement('a');
+    function renderChannels(chs) {
+        chs.forEach(channel => {
+            const item = document.createElement('div');
             item.className = 'ch-item';
             item.dataset.channelName = channel.name;
-            item.href = '#';
             item.innerHTML = `
-                <img src="${channel.logo}" class="ch-logo" alt=""
-                     onerror="this.src='https://i.imgur.com/Nl4aZCF.png'">
+                <img src="${channel.logo}" class="ch-logo" onerror="this.src='https://i.imgur.com/Nl4aZCF.png'">
                 <span class="ch-name">${channel.name}</span>
-                <span class="ch-play-icon">▶</span>
             `;
-            item.addEventListener('click', e => {
-                e.preventDefault();
-                playChannel(channel.name);
-            });
+            item.onclick = () => playChannel(channel.name);
             channelListEl.appendChild(item);
         });
         updateActiveChannel();
@@ -554,20 +445,7 @@
 
     function renderInitialChannels() {
         channelListEl.innerHTML = '';
-        currentPage = 1;
-        const slice = allChannels.slice(0, CHANNELS_PER_PAGE);
-        currentlyDisplayedChannels = slice;
-        renderChannels(slice);
-    }
-
-    function appendMoreChannels() {
-        if (searchInput.value) return;
-        const start = currentPage * CHANNELS_PER_PAGE;
-        if (start >= allChannels.length) return;
-        const newChs = allChannels.slice(start, start + CHANNELS_PER_PAGE);
-        currentlyDisplayedChannels.push(...newChs);
-        renderChannels(newChs);
-        currentPage++;
+        renderChannels(allChannels.slice(0, CHANNELS_PER_PAGE));
     }
 
     function updateActiveChannel() {
@@ -576,23 +454,14 @@
         });
     }
 
-    // ── 4. Search & infinite scroll ──────────────────
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
-        listContainer.scrollTop = 0;
         if (!term) { renderInitialChannels(); return; }
         const filtered = allChannels.filter(c => c.name.toLowerCase().includes(term));
         channelListEl.innerHTML = '';
         renderChannels(filtered);
     });
 
-    listContainer.addEventListener('scroll', () => {
-        if (searchInput.value) return;
-        const { scrollTop, scrollHeight, clientHeight } = listContainer;
-        if (scrollTop + clientHeight >= scrollHeight - 300) appendMoreChannels();
-    });
-
-    // ── Init ─────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', fetchAndParseM3U);
 </script>
 </body>
