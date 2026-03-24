@@ -18,13 +18,10 @@
             --green: #34d399;
             --red:   #fb7185;
             --amber: #fbbf24;
-            --gold:  #eab308;
-            
-            /* ── Brightened Text Palette ── */
             --text:  #ffffff;             
             --text2: rgba(255,255,255,0.88); 
             --text3: rgba(255,255,255,0.55); 
-            --glow:  0 0 30px rgba(56,189,248,0.15);
+            --glow:  0 0 40px rgba(56,189,248,0.12);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +34,6 @@
             overflow: hidden;
         }
 
-        /* ── Dot-grid background ── */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -50,7 +46,6 @@
 
         #app { position: relative; z-index: 1; height: 100vh; display: flex; flex-direction: column; }
 
-        /* ── TOPBAR ── */
         .topbar {
             height: 54px;
             border-bottom: 1px solid var(--border);
@@ -72,7 +67,6 @@
             font-size: 14px;
             box-shadow: 0 0 14px rgba(56,189,248,0.4);
         }
-        .topbar-logo span { color: var(--text3); }
         .topbar-spacer { flex: 1; }
         
         .status-badge {
@@ -81,11 +75,6 @@
             border: 1px solid rgba(52,211,153,0.25);
             padding: 4px 11px; border-radius: 100px;
             font-size: 11px; color: var(--green); font-weight: 600;
-        }
-        .status-badge.loading {
-            background: rgba(251,191,36,0.1);
-            border-color: rgba(251,191,36,0.25);
-            color: var(--amber);
         }
         .status-dot {
             width: 6px; height: 6px;
@@ -96,10 +85,9 @@
 
         .layout { display: flex; flex: 1; overflow: hidden; }
 
-        /* ── PLAYER SIDE ── */
         .player-side {
             flex: 1; display: flex; flex-direction: column;
-            padding: 20px; gap: 14px; overflow-y: auto;
+            padding: 20px; gap: 18px; overflow-y: auto;
         }
 
         .video-wrap {
@@ -131,7 +119,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Now-playing bar */
         .now-playing {
             display: flex; align-items: center; gap: 14px;
             background: var(--bg2);
@@ -139,67 +126,61 @@
             border-radius: 10px; padding: 14px 18px;
             flex-shrink: 0;
         }
-        .np-icon {
-            width: 38px; height: 38px; border-radius: 8px;
-            background: rgba(56,189,248,0.12);
-            border: 1px solid rgba(56,189,248,0.25);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; flex-shrink: 0;
-        }
-        .np-label {
-            font-size: 10px; font-weight: 700; letter-spacing: 2px;
-            text-transform: uppercase; color: var(--text3);
-            margin-bottom: 4px;
-        }
-        .np-name {
-            font-size: 15px; font-weight: 600; color: #fff;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        
-        .np-badge {
-            margin-left: auto;
-            display: flex; align-items: center; gap: 6px;
-            font-size: 11px; font-weight: 700; color: var(--text3);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            padding: 5px 12px; border-radius: 100px;
-        }
+        .np-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
+        .np-name { font-size: 15px; font-weight: 600; color: #fff; }
+        .np-badge { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--text3); background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; }
         .np-badge.playing { color: var(--green); border-color: rgba(52,211,153,0.2); }
 
-        /* ── BENTO CREDITS ── */
-        .bento-credits {
+        /* ── BENTO DEVELOPER CARD ── */
+        .dev-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .bento-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .bento-tag {
-            font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
-            color: var(--blue); text-transform: uppercase;
-            background: rgba(56, 189, 248, 0.1); padding: 2px 8px; border-radius: 4px;
+        .dev-intro h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .dev-intro p { font-size: 13px; line-height: 1.6; color: var(--text2); max-width: 600px; }
+        
+        .pill-container { display: flex; gap: 12px; flex-wrap: wrap; }
+        .pill {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
-        .bento-links a { font-size: 11px; color: var(--text3); text-decoration: none; margin-left: 12px; }
-        .bento-links a:hover { color: #fff; }
-        .bento-body p { font-size: 12px; line-height: 1.6; color: var(--text2); }
+        .pill:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+        .pill-icon { font-size: 18px; }
 
-        /* ── WIDGET SECTION ── */
-        .widget-area { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 4px; }
+        .widget-area { margin-top: 10px; }
         .widget-frame { 
-            border-radius: 20px; border: 1px solid #2a2a2a; background: #0d0d0d; 
-            max-width: 100%; height: 280px; width: 480px;
+            border-radius: 16px; border: 1px solid #2a2a2a; 
+            background: #0d0d0d; width: 480px; height: 280px; max-width: 100%;
         }
-        .widget-label { font-size: 10px; color: #555; text-decoration: none; padding-left: 10px; }
+        .widget-label { display: block; margin-top: 8px; font-size: 11px; color: #555; text-decoration: none; padding-left: 4px; }
 
-        /* ── CHANNEL SIDE ── */
+        /* ── CHANNEL LIST SIDE ── */
         .channel-side {
             width: 340px; flex-shrink: 0;
             border-left: 1px solid var(--border);
             background: #050505;
             display: flex; flex-direction: column;
         }
-        .ch-header { padding: 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .ch-header { padding: 16px; border-bottom: 1px solid var(--border); }
         .ch-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
         #search-input {
             width: 100%; background: var(--bg3); border: 1px solid var(--border);
@@ -216,7 +197,8 @@
         @media (max-width: 768px) {
             .layout { flex-direction: column; overflow: auto; }
             .channel-side { width: 100%; height: 400px; border-left: none; border-top: 1px solid var(--border); }
-            .widget-frame { width: 100%; height: 220px; }
+            .dev-card { padding: 16px; }
+            .pill { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -228,9 +210,9 @@
             NikshepOS<span>.tv</span>
         </div>
         <div class="topbar-spacer"></div>
-        <div class="status-badge loading" id="top-status">
+        <div class="status-badge" id="top-status">
             <div class="status-dot"></div>
-            <span id="top-status-text">Syncing</span>
+            <span id="top-status-text">Live</span>
         </div>
     </div>
 
@@ -242,31 +224,34 @@
             </div>
 
             <div class="now-playing">
-                <div class="np-icon">📡</div>
                 <div style="flex:1;min-width:0">
-                    <div class="np-label">Now Playing</div>
-                    <div class="np-name" id="np-name">Select a channel to begin</div>
+                    <div class="np-label">Streaming Hub</div>
+                    <div class="np-name" id="np-name">Select a station to begin</div>
                 </div>
                 <div class="np-badge" id="np-badge"><div class="status-dot"></div> IDLE</div>
             </div>
 
-            <div class="bento-credits">
-                <div class="bento-header">
-                    <span class="bento-tag">DEVELOPER CREDITS</span>
-                    <div class="bento-links">
-                        <a href="https://nikshep.vercel.app" target="_blank">Portfolio</a>
-                        <a href="https://instagram.com/nikkk.exe" target="_blank">Instagram</a>
-                    </div>
-                </div>
-                <div class="bento-body">
+            <div class="dev-card">
+                <div class="dev-intro">
+                    <h3>Connect & Explore</h3>
                     <p>
-                        Engineered by <b>Nikshep Doggalli</b>. Full-Stack Developer specializing in high-fidelity 
-                        React environments. Currently gamifying life performance at <b>EntropyZero</b>.
+                        Engineered by <b>Nikshep Doggalli</b>. I build high-fidelity web experiences where data meets design. 
+                        Currently developing <b>EntropyZero</b>—a system that tracks your life habits like a stock market index.
                     </p>
-                    <div class="widget-area">
-                        <iframe src="https://entropyzero.vercel.app/widget.html?uid=ylQMHvRKeFNNE6f553gwt8TZmyo2" frameborder="0" class="widget-frame"></iframe>
-                        <a href="https://entropyzero.vercel.app" target="_blank" class="widget-label">entropyzero.vercel.app</a>
-                    </div>
+                </div>
+
+                <div class="pill-container">
+                    <a href="https://nikshep.vercel.app" target="_blank" class="pill">
+                        <span class="pill-icon">🌐</span> Visit Portfolio
+                    </a>
+                    <a href="https://instagram.com/nikkk.exe" target="_blank" class="pill">
+                        <span class="pill-icon">📸</span> Instagram
+                    </a>
+                </div>
+
+                <div class="widget-area">
+                    <iframe src="https://entropyzero.vercel.app/widget.html?uid=ylQMHvRKeFNNE6f553gwt8TZmyo2" frameborder="0" class="widget-frame"></iframe>
+                    <a href="https://entropyzero.vercel.app" target="_blank" class="widget-label">entropyzero.vercel.app</a>
                 </div>
             </div>
         </div>
@@ -293,7 +278,6 @@
     const videoOverlay = document.getElementById('video-overlay');
     const npName = document.getElementById('np-name');
     const npBadge = document.getElementById('np-badge');
-    const topStatusTxt = document.getElementById('top-status-text');
 
     const M3U_URL = 'https://raw.githubusercontent.com/siam3310/cdn-tv/refs/heads/main/siamcdnplaylist.m3u';
     let hls, allChannels = [], activeChannel = null;
@@ -310,10 +294,8 @@
                     allChannels.push({ name, logo: logo ? logo[1] : 'https://i.imgur.com/Nl4aZCF.png' });
                 }
             }
-            topStatusTxt.textContent = 'Live';
-            document.getElementById('top-status').classList.remove('loading');
             renderChannels(allChannels.slice(0, 100));
-        } catch (e) { topStatusTxt.textContent = 'Offline'; }
+        } catch (e) { console.error("Sync failed"); }
     }
 
     function renderChannels(chs) {
